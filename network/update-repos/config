@@ -1,0 +1,76 @@
+#!/bin/bash
+
+root="$HOME/Repositories"
+bin_root="Application/Scripts"
+cfg_root=".config"
+
+repo-Scripts () {
+    tree=(
+    ['audio']="$bin_root/speak"
+    ['audio/alsa']="$bin_root/volume"
+    ['audio/jack']="$bin_root/jack-*"
+    ['audio/mpd']="$bin_root/{dmpc,np,mpd-timelog}"
+    ['audio/mpd/mpc-utils']="$bin_root/mpc-*"
+    ['audio/mpd/relevant-track']="$bin_root/relevant-track{,-np,-weechat}"
+    ['file/archive']="$bin_root/{archive,extract}"
+    ['file/backup']="$bin_root/backup{,-system}"
+    ['file/cleanup']="$bin_root/{sample-dups,superclean,sanitize}"
+    ['file/launch']="$bin_root/{open,*-launch,event-scripts,chroot-cmd}"
+    ['file/organize']="$bin_root/organize-by-*"
+    ['libs/python']="$HOME/Projects/python/{iomisc,wvmmarkov}.py"
+    ['network/download']="$bin_root/{dl,vkdl,music-populate}"
+    ['network/updater']="$bin_root/update-*"
+    ['network/util']="$bin_root/{toggle-host*,restore-hosts.bat,azilink,speedtest}"
+    ['network/sync']="$bin_root/random-media-sync"
+    ['status']="$bin_root/{osd,battery-monitor}"
+    ['status/barstatus']="$bin_root/barstatus{,-*}"
+    ['status/human-sysinfo']="$bin_root/human-*info"
+    ['status/xmobar']="$bin_root/xmobar-*"
+    ['system']="$bin_root/{rc,zimage-extract}"
+    ['term/colorscheme-generator']="$bin_root/{bg-scheme,term-color-generator}"
+    ['term/login']="$bin_root/{login-action-menu,resume-screen}"
+    ['term/test']="$bin_root/color{block,code}s"
+    ['term/wrapper']="$bin_root/fbterm-tint"
+    ['text']="$bin_root/{logs-to-emech,wvm-markov}"
+    ['toys']="$bin_root/{lottery,lucid,random-word,self-pong,tclock}"
+    ['toys/arch']="$bin_root/arch{logo,-splash}"
+    ['toys/dangerous']="$bin_root/{schizo,dcc-kill}"
+    ['utils']="$bin_root/{timecalc,wvmexternal}"
+    ['utils/bash']="$bin_root/{tell,reminders}"
+    ['video/ffmpeg']="$bin_root/ffmpeg-*"
+    ['video/mplayer']="$bin_root/mplayer*"
+    ['video/youtube-dl']="$bin_root/ytdl-*"
+    ['video/tv']="$bin_root/tv{,-scan}"
+    ['image/viewnior']="$bin_root/viewnior"
+    ['wm']="$bin_root/wm-{session-manager,autostart}"
+    ['wm/herbstluftwm']="$bin_root/hlwm-*"
+    ['wm/dwm']="$bin_root/dwm-*"
+    ['x11']="$bin_root/colemak"
+    )
+}
+repo-Configuration () {
+    tree=(
+    ['audio/alsa']='.asoundrc'
+    ['audio/mpd']="$cfg_root/mpd/mpd.conf|(password +).*"
+    ['audio/mpd/ncmpcpp']='.ncmpcpp/{config,keys}'
+    ['file/ranger']="$cfg_root/ranger/{*.conf,*.py}"
+    ['file/wvm-open']="$cfg_root/wvm-open/config"
+    ['network/pentadactyl']='.pentadactylrc'
+    ['network/samba']='/etc/samba/smb.conf'
+    ['network/update-repos']="$cfg_root/update-repos/config"
+    ['network/unison']='.unison/*.prf'
+    ['shell/bash']='.bash{rc,_profile,_logout}'
+    ['status/i3status']="$cfg_root/i3status/config"
+    ['status/xmobar']="$cfg_root/xmobar/*"
+    ['system/pacman']='/etc/pacman.{conf,d/mirrorlist}'
+    ['system/portage']='/etc/portage/*'
+    ['text/vim']='.vimrc'
+    ['util/event-scripts']='.local/share/event-scripts'
+    ['util/wvmexternal']="$cfg_root/wvmexternal/config"
+    ['video/mplayer']='.mplayer/*'
+    ['wm/herbstluftwm']="$cfg_root/herbstluftwm/{autostart,layouts,hook-handler}"
+    ['wm/i3']="$cfg_root/i3/config"
+    ['wm/screen']='.screenrc'
+    ['x11']='{.{xbindkeysrc,xinitrc,Xdefaults},/etc/X11/xorg.conf}'
+    )
+}

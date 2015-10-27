@@ -1,0 +1,294 @@
+#!/bin/bash
+export WINDOW_MANAGER='herbstluftwm'
+
+config="$HOME/.config/herbstluftwm"
+colors=($(awk '/^\*color/{print $2}' .Xdefaults))
+hc='herbstclient'
+
+terminal=terminator
+filemanager=thunar
+
+
+# Convenience functions.
+is_running () { pgrep "$1" > /dev/null; }
+launch () { $hc spawn "$@"; }
+launch_once () { is_running "$@" || launch "$@"; }
+optional () { type -p "$1" > /dev/null && $hc spawn "$@"; }
+
+
+
+######################
+### Initialization ###
+######################
+
+# Alert listeners.
+$hc emit_hook reload
+$hc emit_hook hook_handler reload
+
+# Drop bindings and rules.
+$hc keyunbind --all
+$hc mouseunbind
+$hc unrule -F
+
+# Redetect screens.
+$hc detect_monitors
+
+# Update environment.
+. /etc/profile
+for f in profile xprofile; do
+    . ~/.$f
+done
+if [[ -f "$config/.env" ]]; then
+    for e in $(<"$config/.env"); do
+        $hc unsetenv $e
+    done
+fi
+env | cut -d'=' -f1 | tee "$config/.env" | \
+    while read -r e; do
+        eval $hc setenv $e \"\$$e\"
+    done
+
+
+
+#######################
+### General Options ###
+#######################
+
+$hc set default_frame_layout 2
+
+$hc set frame_bg_transparent 1
+$hc set frame_bg_normal_color "${colors[0]}"
+$hc set frame_bg_active_color "${colors[8]}"
+
+$hc set frame_border_width 1
+$hc set frame_gap 0
+$hc set frame_border_normal_color "${colors[1]}"
+$hc set frame_border_active_color "${colors[10]}"
+
+$hc set window_border_width 1
+$hc set window_gap 0
+$hc set window_border_normal_color "${colors[2]}"
+$hc set window_border_active_color "${colors[15]}"
+
+$hc set gapless_grid 1
+$hc set always_show_frame 1
+$hc set smart_window_borders 1
+$hc set smart_frame_surroundings 1
+
+$hc set focus_follows_shift 1
+$hc set focus_follows_mouse 1
+$hc set raise_on_focus 0
+$hc set raise_on_click 1
+
+$hc set snap_distance 4
+$hc set snap_gap 0
+
+$hc pad 0 18 0 0 0
+
+
+
+########################
+### General Bindings ###
+########################
+
+# Modifier variables
+s=Shift
+c=Control
+m=Mod4
+a=Mod1
+
+# Tags
+$hc rename default "1"
+for ((t=1; t<=10; t++)); do
+    k=$((t % 10))
+    $hc add "$t"
+    $hc keybind "$m-$k" use "$t"
+    $hc keybind "$m-$s-$k" move "$t"
+done
+$hc floating 9 on
+$hc set_layout $($hc get default_frame_layout)
+
+# Layout control
+$hc keybind $m-r remove
+$hc keybind $m-s rotate
+$hc keybind $m-slash cycle_layout 1
+$hc keybind $m-comma split vertical 0.5
+$hc keybind $m-period split horizontal 0.5
+$hc keybind $m-f floating toggle
+$hc keybind $m-m fullscreen toggle
+$hc keybind $m-t pseudotile toggle
+
+# Layout manager
+$hc keybind $m-l spawn hlwm-layout-manager load
+$hc keybind $m-$s-l spawn hlwm-layout-manager
+
+# Mouse control
+$hc mousebind $m-Button1 move
+$hc mousebind $m-Button2 resize
+$hc mousebind $m-Button3 zoom
+
+# Focus window
+$hc keybind $m-a jumpto urgent
+$hc keybind $m-n focus left
+$hc keybind $m-e focus down
+$hc keybind $m-u focus up
+$hc keybind $m-i focus right
+
+# Cycle focus
+$hc keybind $m-BackSpace cycle_monitor
+$hc keybind $m-k cycle +1
+$hc keybind $m-$s-k cycle -1
+$hc keybind $m-space cycle_all +1
+
+# Move window
+$hc keybind $m-$s-n shift left
+$hc keybind $m-$s-e shift down
+$hc keybind $m-$s-u shift up
+$hc keybind $m-$s-i shift right
+
+# Resize window
+step=0.02
+$hc keybind $m-$c-n resize left +$step
+$hc keybind $m-$c-e resize down +$step
+$hc keybind $m-$c-u resize up +$step
+$hc keybind $m-$c-i resize right +$step
+
+# Close window
+$hc keybind $m-c close_or_remove
+
+# Quit/Reload
+$hc keybind $m-q reload
+$hc keybind $m-$s-q emit_hook logout
+
+
+
+############################
+### Application Bindings ###
+############################
+$hc keybind $m-b spawn toggle-trayer
+
+# MPD
+$hc keybind $s-XF86AudioPlay spawn $terminal -e ncmpcpp
+$hc keybind $m-$s-Up spawn $terminal -e ncmpcpp
+$hc keybind $m-Up spawn dmpc
+
+$hc keybind XF86AudioPlay spawn mpc toggle
+$hc keybind $m-Down spawn mpc toggle
+
+$hc keybind Pause spawn mpc pause
+
+$hc keybind XF86AudioStop spawn mpc stop
+$hc keybind $m-$s-Down spawn mpc stop
+
+$hc keybind XF86AudioPrev spawn mpc prev
+$hc keybind $m-Left spawn mpc prev
+
+$hc keybind XF86AudioNext spawn mpc next
+$hc keybind $m-Right spawn mpc next
+
+$hc keybind XF86AudioRewind spawn mpc seek '-00:00:10'
+$hc keybind $s-XF86AudioPrev spawn mpc seek '-00:00:10'
+$hc keybind $m-$s-Left spawn mpc seek '-00:00:10'
+
+$hc keybind XF86AudioForward spawn mpc seek '+00:00:10'
+$hc keybind $s-XF86AudioNext spawn mpc seek '+00:00:10'
+$hc keybind $m-$s-Right spawn mpc seek '+00:00:10'
+
+$hc keybind $m-Insert spawn mpc-addto Favorites
+$hc keybind $m-Delete spawn mpc-trash
+
+# Volume
+$hc keybind $m-XF86AudioLowerVolume spawn pa-switch -
+$hc keybind $m-XF86AudioRaiseVolume spawn pa-switch +
+
+$hc keybind XF86AudioRaiseVolume spawn pa-vol up
+$hc keybind $m-$c-Up spawn pa-vol up
+
+$hc keybind XF86AudioLowerVolume spawn pa-vol down
+$hc keybind $m-$c-Down spawn pa-vol down
+
+$hc keybind XF86AudioMute spawn pa-vol mute
+$hc keybind $m-Escape spawn pa-vol mute
+
+# Applications
+$hc keybind XF86Calculator spawn gnome-calculator
+$hc keybind $m-o spawn dmenu-launch
+$hc keybind $m-x spawn $terminal -e htop
+
+$hc keybind $m-apostrophe spawn $terminal
+$hc keybind $m-$s-apostrophe spawn $filemanager
+$hc keybind $m-$c-apostrophe spawn $terminal -e ranger
+
+# System
+$hc keybind $m-F6 spawn i3lock
+$hc keybind XF86ScreenSaver spawn i3lock
+
+$hc keybind $m-F7 spawn bash -c \
+    'osd -t1 -c yellow "Monitor sleep."; sleep 1; xset dpms force off'
+
+$hc keybind XF86Eject eject
+
+$hc keybind $c-$s-y spawn bash -c 'xsel -o | xclip -i -selection clipboard'
+
+$hc keybind Print spawn screenshot
+$hc keybind $m-Print spawn screenshot-upload
+
+
+
+
+####################
+### Window Rules ###
+####################
+$hc rule focus=on
+
+$hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+$hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' \
+    manage=off
+$hc rule windowtype~'_NET_WM_STATE_FULLSCREEN' fullscreen=on
+$hc rule windowrole='gtkutils' pseudotile=on
+$hc rule class~'Plugin-container|MPlayer' fullscreen=on
+$hc rule class='Qjackctl' pseudotile=on
+$hc rule class='Wine' tag=9 pseudotile=on
+$hc rule class='Mirage' tag=10
+$hc rule class~'Xsane|Xephyr|Desura|Mupen64plus|Flashplayer|guvcview' \
+    pseudotile=on
+$hc rule instance~'VCLSalFrame|Toplevel' pseudotile=on
+# GIMP
+$hc rule class='Gimp' tag=10 index=11 pseudotile=on
+$hc rule class='Gimp' windowrole~'gimp-(image-window|toolbox|dock)' \
+    pseudotile=off
+$hc rule class='Gimp' windowrole='gimp-toolbox' focus=off index=00
+$hc rule class='Gimp' windowrole='gimp-dock' focus=off index=00
+# Thunar
+$hc rule name='File Operation Progress' pseudotile=on
+
+
+
+#################
+### Autostart ###
+#################
+xsetroot -solid black
+
+launch_once pulseaudio -D
+launch_once hlwm-hook-handler
+launch_once hlwm-dzen2
+launch_once thunar-volman
+launch_once thunar --daemon
+launch_once parcellite
+launch_once nm-applet
+launch_once compton
+launch_once mpd "$HOME/.config/mpd/mpd.conf"
+
+xinput | grep -qiE 'alps|synaptics' &&
+    synaptics-user-settings
+
+for f in resources defaults; do
+    if [[ -x "$HOME/.X$f" ]]; then
+        xrdb -merge "$HOME/.X$f"
+        break
+    fi
+done
+envision "$HOME/.background"
+xrefresh
+
+$hc emit_hook loaded

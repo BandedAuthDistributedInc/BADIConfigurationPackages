@@ -1,0 +1,2 @@
+#!/bin/bash
+osd -c yellow "Herbstluftwm reloading..."

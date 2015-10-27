@@ -1,0 +1,255 @@
+# i3 Configuration
+#
+# Wintervenom [(at)] exovenom.net
+#
+
+#############################
+### Stylin' and Profilin' ###
+#############################
+                                                                 # UI options #
+workspace_layout                    tabbed
+workspace_auto_back_and_forth       yes
+focus_follows_mouse                 yes
+popup_during_fullscreen             smart
+#new_window                          1pixel
+
+                                                                   # UI style #
+#                                   Border  Backgnd Foregnd
+#                                   -----------------------
+client.focused_inactive             #222222 #111111 #333333
+client.focused                      #666666 #666666 #cccccc
+client.unfocused                    #666666 #444444 #999999
+bar {
+    colors {
+        background                          #000000
+        statusline                                  #666666
+        focused_workspace           #cccccc #666666 #cccccc
+        active_workspace            #666666 #444444 #666666
+        inactive_workspace          #222222 #111111 #222222
+        urgent_workspace            #cc6666 #ffcccc #cc6666
+    }
+    status_command i3status -c
+}
+font                                pango:Monospace 10
+
+
+
+#######################
+### Rules for Fools ###
+#######################
+                                                      # Workspace assignments #
+assign      [class="Wine"]              8
+assign      [class="Steam"]             8
+assign      [class="Gimp"]              9
+
+                                                               # Window rules #
+for_window  [class="Wine"]              floating enable, border 1pixel
+for_window  [class="Xsane"]             floating enable, border 1pixel
+for_window  [class="Xephyr"]            floating enable, border 1pixel
+for_window  [class="Dosbox"]            floating enable, border 1pixel
+for_window  [class="Gimp"]              floating enable
+for_window  [class="openarena"]         floating enable
+for_window  [class="mupen64plus"]       floating enable
+for_window  [class="Desura"]            floating enable, border 1pixel
+for_window  [class="SDL_App"]           floating enable, border 1pixel
+
+
+
+########################
+### WE HAVE. LIFDOFF ###
+########################
+                                                                # Auto-launch #
+#exec        wm-autostart
+#exec        dropboxd
+#exec        nm-applet
+#exec        compton-composite -b
+exec        mpd /home/wintervenom/.config/mpd/mpd.conf
+
+
+
+##########################################
+### Kinky Bondage:  Master and Servant ###
+##########################################
+
+set         $terminal                   terminator
+set         $filemanager                nemo --no-desktop
+
+                                                                        # MPD #
+bindsym     $s+XF86AudioPlay            exec $terminal -e ncmpcpp
+bindsym     $m+$s+Up                    exec $terminal -e ncmpcpp
+bindsym     $m+Up                       exec dmpc
+
+bindsym     XF86AudioPlay               exec mpc toggle
+bindsym     $m+Down                     exec mpc toggle
+
+bindsym     Pause                       exec mpc pause
+
+bindsym     XF86AudioStop               exec mpc stop
+bindsym     $m+$s+Down                  exec mpc stop
+
+bindsym     XF86AudioPrev               exec mpc prev
+bindsym     $m+Left                     exec mpc prev
+
+bindsym     XF86AudioNext               exec mpc next
+bindsym     $m+Right                    exec mpc next
+
+bindsym     XF86AudioRewind             exec mpc seek -00:00:10
+bindsym     $s+XF86AudioPrev            exec mpc seek -00:00:10
+bindsym     $m+$s+Left                  exec mpc seek -00:00:10
+
+bindsym     XF86AudioForward            exec mpc seek -00:00:10
+bindsym     $s+XF86AudioNext            exec mpc seek +00:00:10
+bindsym     $m+$s+Right                 exec mpc seek +00:00:10
+
+bindsym     $m+Insert                   exec mpc-addto Favorites
+bindsym     $m+Delete                   exec mpc-trash
+
+                                                                     # Volume #
+bindsym     XF86AudioRaiseVolume        exec pavol up
+bindsym     $m+$c+Up                    exec pavol up
+
+bindsym     XF86AudioLowerVolume        exec pavol down
+bindsym     $m+$c+Down                  exec pavol down
+
+bindsym     XF86AudioMute               exec pavol mute
+bindsym     $m+Escape                   exec pavol mute
+
+                                                               # Applications #
+bindsym     XF86Calculator              exec gnome-calculator
+bindsym     $m+o                        exec dmenu-launch
+bindsym     $m+x                        exec $terminal -e htop
+
+bindsym     $m+$s+apostrophe            exec $terminal
+
+bindsym     $m+apostrophe               exec $filemanager
+bindsym     $s+XF86Explorer             exec $filemanager
+
+bindsym     Print                       exec gnome-screenshot
+bindsym     $s+Print                    exec screenshot
+bindsym     $m+Print                    exec screenshot-upload
+
+bindsym     $m+F6                       exec gnome-screensaver-command -l
+bindsym     XF86Eject                   exec eject
+bindsym     $a+c                        exec bash -c 'xsel -o | xclip -b'
+bindsym     $m+F7                       exec bash -c 'sync & sleep 1 && xset dpms force off'
+bindsym     $m+F4                       exec sync
+
+
+
+#########################################
+### Kinky Bondage:  Follow the Leader ###
+#########################################
+
+                                                                  # Modifiers #
+set         $m                          Mod4
+set         $c                          Control
+set         $s                          Shift
+set         $a                          Mod1
+
+floating_modifier                       $m
+
+                                                                  # Workspace #
+# Switch workspace [1-9,0]
+bindcode    $m+10                       workspace 1
+bindcode    $m+11                       workspace 2
+bindcode    $m+12                       workspace 3
+bindcode    $m+13                       workspace 4
+bindcode    $m+14                       workspace 5
+bindcode    $m+15                       workspace 6
+bindcode    $m+16                       workspace 7
+bindcode    $m+17                       workspace 8
+bindcode    $m+18                       workspace 9
+bindcode    $m+19                       scratchpad show
+
+# Move window to workspace [1-9,0]
+bindcode    $m+$s+10                    move workspace 1
+bindcode    $m+$s+11                    move workspace 2
+bindcode    $m+$s+12                    move workspace 3
+bindcode    $m+$s+13                    move workspace 4
+bindcode    $m+$s+14                    move workspace 5
+bindcode    $m+$s+15                    move workspace 6
+bindcode    $m+$s+16                    move workspace 7
+bindcode    $m+$s+17                    move workspace 8
+bindcode    $m+$s+18                    move workspace 9
+bindcode    $m+$s+19                    move scratchpad
+
+                                                                     # Layout #
+# Fullscreen [m]
+bindcode    $m+58                       fullscreen
+
+# Titlebar stack [s]
+bindcode    $m+40                       layout stacking
+
+# Default (window stack) [d]
+bindcode    $m+42                       layout default
+
+# Tabbed [t]
+bindcode    $m+41                       layout tabbed
+
+# Float [f]
+bindcode    $m+26                       floating toggle
+
+# F/T layer focus [space]
+bindcode    $m+65                       focus mode_toggle
+
+                                                                  # Container #
+# New container [Return]
+bindcode    $m+36                       open
+
+# Split horizontal [comma]
+bindcode    $m+59                       split h
+
+# Split vertical [period]
+bindcode    $m+60                       split v
+
+# Focus parent [l]
+bindcode    $m+30                       focus parent
+
+# Focus child [y]
+bindcode    $m+32                       focus child
+
+                                                                     # Window #
+# Focus window [neui]
+bindcode    $m+44                       focus left
+bindcode    $m+45                       focus down
+bindcode    $m+31                       focus up
+bindcode    $m+46                       focus right
+
+# Move window [neui]
+bindcode    $m+$s+44                    move left
+bindcode    $m+$s+45                    move down
+bindcode    $m+$s+31                    move up
+bindcode    $m+$s+46                    move right
+
+# Resize window [neui]
+bindcode    $m+$c+44                    resize grow left 10 px
+bindcode    $m+$c+45                    resize grow down 10 px
+bindcode    $m+$c+31                    resize grow up 10 px
+bindcode    $m+$c+46                    resize grow right 10 px
+
+# Shrink window [neui]
+bindcode    $m+$a+44                    resize shrink right 10 px
+bindcode    $m+$a+45                    resize shrink up 10 px
+bindcode    $m+$a+31                    resize shrink down 10 px
+bindcode    $m+$a+46                    resize shrink left 10 px
+
+# Focus shortcuts [j,k,g]
+bindcode    $m+29                       exec i3-input -p 'jump ' -P 'Jump: '
+bindcode    $m+57                       exec i3-input -p 'mark ' -P 'Mark: '
+bindcode    $m+28                       exec i3-input -p 'goto ' -P 'Goto: '
+
+# Close window [c]
+bindcode    $m+54                       kill
+
+                                                                    # Manager #
+# Quit [q]
+bindcode    $m+$s+24                    exec gnome-session-quit --logout
+
+# Shutdown [q]
+bindcode    $m+$a+24                    exec gnome-session-quit --shutdown
+
+# Restart [q]
+bindcode    $m+24                       reload
+bindcode    $m+$c+24                    restart
+
+# vim: nowrap:textwidth=0

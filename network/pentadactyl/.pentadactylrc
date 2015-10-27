@@ -1,0 +1,27 @@
+"hg6823
+
+loadplugins '\.(js|penta)$'
+group user
+map -count -modes=n,v h -builtin <Nop>
+map -count -modes=n,v H -builtin <Nop>
+map -count -modes=n,v n -builtin <count>h
+map -count -modes=n,v k -builtin <count>n
+map -count -modes=n,v N -builtin <count>H
+map -count -modes=n,v K -builtin <count>N
+map -count -modes=n,v e -builtin <count>j
+map -count -modes=n,v u -builtin <count>k
+map -count -modes=n,v l -builtin <count>u
+map -count -modes=n,v i -builtin <count>l
+map -count -modes=n,v j -builtin <count>i
+map -count -modes=n,v J -builtin <count>I
+map -count -modes=n,v I -builtin <count>L
+map -count -modes=n,v X -builtin <count>:emenu<Space>Private<Space>Browsing<Tab>
+map -modes=n,v <C-o> -javascript io.system('ytdl-mplayer "' + buffer.URL + '"')
+map -modes=n,v <C-S-O> -javascript io.system('ytdl -d /home/wintervenom/Videos "' + buffer.URL + '"')
+map -count -modes=n <C-F1> <count>:set<Space>guioptions!=m<Return>
+map -count -modes=n <C-F2> <count>:set<Space>guioptions!=B<Return>
+map -count -modes=n <C-Tab> <count>:js<Space>window.content.document.toggleImageSize();<Return>
+set guioptions=CrsT
+set hintkeys=arstdhneio
+
+" vim: set ft=pentadactyl:

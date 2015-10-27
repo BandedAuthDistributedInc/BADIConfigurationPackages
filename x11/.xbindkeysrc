@@ -1,0 +1,180 @@
+##################
+### Multimedia ###
+##################
+"mpc toggle"
+    XF86AudioPlay
+
+"mpc toggle"
+    m:0x10 + c:215
+    Mod2 + XF86AudioPlay
+
+"mpc pause"
+    Pause
+
+"terminator -e ncmpcpp"
+    Shift + XF86AudioPlay
+
+"mpc stop"
+    XF86AudioStop
+
+"mpc prev"
+    XF86AudioPrev
+
+"mpc next"
+    XF86AudioNext
+
+"mpc seek -00:00:10"
+    XF86AudioRewind
+
+"mpc seek +00:00:10"
+    XF86AudioForward
+
+"mpc seek -00:00:10"
+    Shift + XF86AudioPrev
+
+"mpc seek +00:00:10"
+    Shift + XF86AudioNext
+
+"mpc-trash"
+    Mod4 + Delete
+
+"mpc-addto Favorites"
+    Mod4 + Insert
+
+"mpc-addto Favorites"
+    m:0x10 + c:164
+    Mod2 + XF86Favorites
+
+"mpc-trash"
+    m:0x10 + c:166
+    Mod2 + XF86Back
+
+####################################
+### Multimedia, Alternative Keys ###
+####################################
+"terminator -e ncmpcpp"
+    Shift+Mod4 + Up
+
+"dmpc"
+    Mod4 + Up
+
+"mpc stop"
+    Shift+Mod4 + Down
+
+"mpc toggle"
+    Mod4 + Down
+
+"mpc prev"
+    Mod4 + Left
+
+"mpc next"
+    Mod4 + Right
+
+"mpc seek -00:00:05"
+    Shift+Mod4 + Left
+
+"mpc seek +00:00:05"
+    Shift+Mod4 + Right
+
+"terminator -e ssh -tC demon ncmpcpp"
+    Shift+Mod1+Mod4 + Up
+
+"ssh demon mpc stop"
+    Shift+Mod1+Mod4 + Down
+
+"ssh demon mpc toggle"
+    Mod1+Mod4 + Down
+
+"ssh demon mpc prev"
+    Mod1+Mod4 + Left
+
+"ssh demon mpc next"
+    Mod1+Mod4 + Right
+
+"ssh demon mpc seek -00:00:05"
+    Shift+Mod1+Mod4 + Left
+
+"ssh demon mpc seek +00:00:05"
+    Shift+Mod1+Mod4 + Right
+
+######################
+### Volume Control ###
+######################
+"pa-vol mute"
+    XF86AudioMute
+
+"pa-vol down"
+    XF86AudioLowerVolume
+
+"pa-vol up"
+    XF86AudioRaiseVolume
+
+########################################
+### Volume Control, Alternative Keys ###
+########################################
+"pa-vol mute"
+    Mod4 + Escape
+
+"pa-vol down"
+    Mod4 + Control + Down
+
+"pa-vol up"
+    Mod4 + Control + Up
+
+###########################################
+### Application Launchers, Special Keys ###
+###########################################
+"gnome-calculator"
+    XF86Calculator
+
+#############################
+### Application Launchers ###
+#############################
+"dmenu-launch"
+    Mod4 + o
+
+"terminator"
+    Mod4 + apostrophe
+
+"terminator -e htop"
+    Mod4 + x
+
+"terminator -e bash -c 'PYTHONOPTIMIZE=1 ranger'"
+    Mod4+Mod1 + apostrophe
+
+"thunar"
+    Mod4+Shift + apostrophe
+
+"thunar"
+    Shift + XF86Explorer
+
+"screenshot"
+    Print
+
+"screenshot-upload"
+    Mod4 + Print
+
+#"i3lock"
+"gnome-screensaver-command -l"
+    Mod4 + F6
+
+#"i3lock"
+"gnome-screensaver-command -l"
+    m:0x50 + c:133
+    Mod2+Mod4 + Super_L
+
+"eject"
+    XF86Eject
+
+"bash -c 'xsel -o | xclip -b'"
+    Control+Shift + y
+
+########################
+### Power Management ###
+########################
+"bash -c 'sleep 1; xset dpms force off'"
+    Mod4 + F7
+
+"sync"
+    Mod4 + F4
+

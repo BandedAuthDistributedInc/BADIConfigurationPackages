@@ -1,0 +1,71 @@
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.dpi: 96
+Xft.rgba: rgb
+
+!Xcursor.theme: neutral
+
+*newLoginCommand: lxdm
+
+XTerm*metaSendsEscape: true
+XTerm*visualBell: true
+XTerm*bellIsUrgent: true
+XTerm*fastScroll: true
+XTerm*multiScroll: true
+XTerm*utf8: 1
+
+URxvt.transparent: true
+URxvt*tintColor: white
+URxvt*shading: 10
+URxvt*scrollBar: false
+URxvt*saveLines: 1000
+URxvt*font: xft: CosmicSansNeueMono-10
+URxvt*boldFont: xft: CosmicSansNeueMono-10
+URxvt.perl-ext: default,url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /home/wintervenom/bin/open
+URxvt.url-select.underline: true
+URxvt*colorURL: #86a2be
+URxvt*matcher.button: 1
+!URxvt*visualBell: true
+URxvt*urgentOnBell: true
+URxvt*cursorBlink: false
+URxvt*termName: rxvt-256color
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~
+
+! Terminal Colors
+! ---------------
+! 0: black
+! 1: red
+! 2: green
+! 3: yellow
+! 4: blue
+! 5: magenta
+! 6: cyan
+! 7: white
+! ---------------
+
+! Scheme Generator: Start
+*background: #000000
+*foreground: #84A4D9
+*color0: #38424B
+*color1: #2F546B
+*color2: #446864
+*color3: #707E85
+*color4: #3680BB
+*color5: #5080B8
+*color6: #5E81AB
+*color7: #5997CA
+*color8: #56A5D6
+*color9: #81A2CD
+*color10: #6BB9CE
+*color11: #B9C9FC
+*color12: #9BBCFF
+*color13: #9ECDFF
+*color14: #BADBFF
+*color15: #E1FFFF
+! Scheme Generator: End

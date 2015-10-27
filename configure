@@ -1,0 +1,20 @@
+#!/bin/sh
+
+ln -s `Rscript -e "cat(system.file('bin/knit', package='knitr'))"` ~/bin
+ln -s `Rscript -e "cat(system.file('bin/servr', package='servr'))"` ~/bin
+ln -s /usr/lib/rstudio/bin/pandoc/pandoc ~/bin
+ln -s /usr/lib/rstudio/bin/pandoc/pandoc-citeproc ~/bin
+ln -s `pwd`/.Renviron ~/
+ln -s `pwd`/.Rprofile ~/
+
+for i in $(find `pwd` -maxdepth 1 -type f -executable);
+  do ln -s $i ~/bin;
+done
+
+ln -s `pwd`/.bash_aliases ~/
+which cranwin || cat .bashrc >> ~/.bashrc
+
+kpsewhich Sweave.sty || tlmgr conf texmf TEXMFHOME "~/texmf:/usr/share/R/share/texmf"
+
+ln -s `pwd`/.gitconfig ~/
+cp .netrc ~/

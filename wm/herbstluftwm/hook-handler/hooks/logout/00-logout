@@ -1,0 +1,18 @@
+#!/bin/bash
+hc=herbstclient
+osd -b -t3 -c yellow "Logging out..."
+
+xwininfo -tree -root | awk '/     0x/{print $1}' | while read winid; do
+    $hc close $winid
+done
+
+if [[ $DESKTOP_SESSION ]]; then
+    cat > "$HOME/.dmrc" <<EOF
+[Desktop]
+Session=$DESKTOP_SESSION
+Language=$LANG
+EOF
+fi
+
+killall -u $USER -HUP
+
